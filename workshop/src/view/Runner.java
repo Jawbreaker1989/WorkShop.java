@@ -1,98 +1,62 @@
 package view;
 
 import logic.WorkShop;
-
 import java.util.Scanner;
 
 public class Runner {
-    private Scanner input;
-
-    public Runner() {
-        input = new Scanner(System.in);
-    }
+    static Scanner sc = new Scanner(System.in);
+    WorkShop workShop = new WorkShop();
+    static Runner runner = new Runner();
 
     public static void main(String[] args) {
-        new Runner().mainMenu();
+        runner.menu();
     }
 
-    private void mainMenu() {
+    public void menu() {
+        System.out.println("********* MENU ******** \n" +
+                "1. Roman numeral \n" +
+                "2. Prime factors\n" +
+                "3. Own Name\n" +
+                "4. Egotistical numbers\n" +
+                "5. Magic number\n" +
+                "6. Friendly numbers\n" +
+                "7. Go out");
 
-        String menu = "<<<<<< MENU PRINCIPAL >>>>>\n\n" +
-                "1.Numeros Romanos\n" +
-                "2. Egolatras\n\n" +
-                "X. Salir";
+        char option = sc.nextLine().charAt(0);
 
-        char option = 0;
+        switch (option) {
+            case '1' -> workShop.romanNumber(10);
+            case '2' -> primeFactor();
+            case '3' -> workShop.ownName(null);
+            case '4' -> workShop.egotisticalNumber(10);
+            case '5' -> workShop.magicNumber(10);
+            case '6' -> workShop.friendlyNumbers(10, 20);
+            case '7' -> System.exit(0);
+            default -> System.err.println("Invalid Option");
+        }
+    }
 
-        do{
-            System.out.println( menu );
+    private void primeFactor() {
+        while (true) {
+            System.out.print("Enter a number to find its prime factors: ");
+            try {
+                int number = Integer.parseInt(sc.nextLine());
+                if (number < 0) {
+                    System.out.println("Please enter a positive number.");
+                } else {
+                    String primeFactors = WorkShop.primeFactors(number);
+                    System.out.println("The prime factors of " + number + " are: " + primeFactors);
 
-            option = input.nextLine().charAt(0);
+                    System.out.print("Do you want to calculate another number? (Y/N): ");
+                    char response = sc.nextLine().charAt(0);
 
-            switch(option){
-                case '1' : roman();
-                break;
-
-                case '2' : egolatr();
-                break;
-
-                case '3' : chains();
+                    if (Character.toUpperCase(response) != 'Y') {
+                        break;
+                    }
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
             }
-
-        }while (Character.toUpperCase(option) != 'X');
-    }
-
-    private void chains() {
-        /*System.out.print("Digite Cadena ");
-        String chain = input.nextLine();
-
-        for( int index = 0 ; index < chain.length() ; index++ ){
-            System.out.println( chain.charAt( index ) );
         }
-
-        System.out.println( chain.compareTo("Sogamoso"));
-
-        System.out.println("Edad");
-
-        int age = Integer.parseInt(input.nextLine());
-
-        System.out.printf("Hola eres %s de Edad\n",age >= 18 ? " Mayor " : " Menor ");*/
-
-        System.out.printf("[%f]\n",Math.PI);
-        System.out.printf("[%.2f]\n",Math.PI);
-        System.out.printf("[%10.2f]\n",Math.PI);
-        System.out.printf("[%-10.2f]\n",Math.PI);
-        System.out.printf("[%010.2f]\n",Math.PI);
-    }
-
-    private void egolatr() {
-        System.out.print("Numero...: ");
-
-        try{
-            int number = Integer.parseInt(input.nextLine());
-
-            System.out.printf("El numero es %d y su cubo es %f en octales %o en hexadecimal %x\n",number,Math.pow(number,3),number,number);
-
-            if( WorkShop.isEgolatr(number) ){
-                //TODO el numero es egolatrta
-            }else{
-                //TODO el numero no es egolatra
-            }
-
-        }catch (NumberFormatException e){
-            System.out.println("Dato no Valido");
-        }
-    }
-
-    private void roman() {
-        System.out.print("Numero...: ");
-
-        try{
-            int number = Integer.parseInt(input.nextLine());
-            System.out.println(WorkShop.convertToRoman(number));
-        }catch (NumberFormatException e){
-            System.out.println("Dato no Valido");
-        }
-
     }
 }
