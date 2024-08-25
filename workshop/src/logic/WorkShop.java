@@ -1,7 +1,7 @@
 package logic;
 
 /**
- * Clase que describe lx bx xbla bla
+ * Clase que describe lx bx xbla blaaaaaajjjjjjjjjjjjjjj
  */
 public class WorkShop {
     //documento el atributo
